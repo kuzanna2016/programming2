@@ -6,6 +6,6 @@
 
 __№__|__Описание__|__Ссылка на работу__
 ---|---|---
-__1__|Игра "Виселица"|[Код]()
+__1__|Игра "Виселица"|[Код](https://github.com/kuzanna2016/programming2/blob/master/1hw/hw1.py)
 
 ![](https://78.media.tumblr.com/932ecb74636ff16e88ab4a30db64fde5/tumblr_peua370kkl1s3hyono1_500.jpg)
