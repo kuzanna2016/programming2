@@ -81,9 +81,9 @@ def choose_theme():
     themes = ['приправы', 'породы собак', 'породы кошек']
     for theme in themes:
         print(theme)
-    the_theme = input('Выбери одну из предложенных тем: ')
+    the_theme = input('Выберите одну из предложенных тем: ')
     while the_theme not in themes:
-        the_theme = input('Напиши, пожалуйста, точное название темы: ')
+        the_theme = input('Напишите, пожалуйста, точное название темы: ')
     return the_theme
 
 
@@ -92,8 +92,8 @@ if __name__ == '__main__':
     z = 1
     while True:
         the_word = load_theme(choose_theme())
-        print(f'У тебя есть {n} попыток, чтобы угадать слово длинной {len(the_word)} букв')
+        print(f'У вас есть {n} попыток, чтобы угадать слово длинной {len(the_word)} букв')
         game(the_word, n)
-        z = int(input('Хочешь сыграть еще?\n1 - Да\n0 - Нет\n'))
+        z = int(input('Хотите сыграть еще?\n1 - Да\n0 - Нет\n'))
         if z == 0:
             break
