@@ -70,7 +70,7 @@ def tries(lives):
 
 
 def correct_input():
-    a = input('Введите 1 букву: ')
+    a = input('Введите одну букву: ')
     if a.isalpha() and len(a) == 1:
         return a
     else:
