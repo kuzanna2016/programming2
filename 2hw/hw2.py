@@ -6,8 +6,7 @@ def choice_of_user(list_of_users):
     user = input('Выберите одного из пользователей, с которым хотите работать:')
     while user not in list_of_users:
         user = input('Введите точное имя пользователя из списка:')
-    print('')
-    print(f'Вы выбрали пользователя {user}.\n')
+    print(f'\nВы выбрали пользователя {user}.\n')
     return user
 
 
@@ -16,7 +15,6 @@ def get_data_from_user(user, type_of_data):
     data = []
     if type_of_data == 'user':
         url = f'https://api.github.com/users/{user}?access_token={token}'
-        request = urllib.request.Request(url)
         response = urllib.request.urlopen(url)
         text = response.read().decode('utf-8')
         data = json.loads(text)
@@ -24,48 +22,42 @@ def get_data_from_user(user, type_of_data):
         i = 1
         while True:
             url = f'https://api.github.com/users/{user}/{type_of_data}?access_token={token}&page={i}'
-            request = urllib.request.Request(url)
             response = urllib.request.urlopen(url)
             text = response.read().decode('utf-8')
             a = json.loads(text)
-            i += 1
             if not a:
                 break
             data.extend(a)
+            i += 1
     return data
 
 
 def repos_names_description(user):
     data = get_data_from_user(user, 'repos')
-    print('Вот список его репозиториев и описаний:')
+    print('Вот список его репозиториев и описаний:\n')
     for i in data:
         description = i['description']
         if description is None:
             description = 'описания нет'
-        print('\t%s: %s' % (i['name'], description))
-    print('')
+        print(f"\t{i['name']}: {description}")
 
 
 def languages_per_user(user):
-    data = get_data_from_user(user, 'repos')
-    languages = []
-    repos_per_languages = {}
-    for i in data:
-        name_of_language = str(i['language'])
-        if name_of_language == 'None':
+    repositories = get_data_from_user(user, 'repos')
+    lang_reps = {}
+    for rep in repositories:
+        if str(rep['language']) == 'None':
             continue
-        if name_of_language not in languages:
-            languages.append(name_of_language)
-    print('Пользователь пишет на %s.\n' % ', '.join(languages))
-    for language in languages:
-        repos = []
-        for i in data:
-            if str(i['language']) == language:
-                repos.append(str(i['name']))
-        repos_per_languages[language] = repos
-    for language, repos in repos_per_languages.items():
+        if rep['language'] not in lang_reps:
+            lang_reps[rep['language']] = []
+        lang_reps[rep['language']].append(rep['name'])
+    return lang_reps
+
+
+def print_languages_per_user(lang_repos_dict):
+    print('Пользователь пишет на ' + ', '.join(str(key) for key in lang_repos_dict.keys()) + '\n')
+    for language, repos in lang_repos_dict.items():
         print(f'Язык {language} используется в репозитории %s.' % ', '.join(repos))
-    print('')
 
 
 def most_repos(user_list):
@@ -74,25 +66,26 @@ def most_repos(user_list):
         data = get_data_from_user(user, 'user')
         repos_number = data['public_repos']
         repos_per_user[user] = repos_number
-    for user in sorted(repos_per_user, key=repos_per_user.get, reverse=True):
-        print(f'Больше всего репозиториев у пользователя {user} - {repos_per_user[user]}.\n')
-        break
+    username = key_with_highest_value(repos_per_user)
+    print(f'Больше всего репозиториев у пользователя {username} - {repos_per_user[username]}.\n')
 
 
 def popular_languages(user_list):
     languages = {}
     for user in user_list:
-        data = get_data_from_user(user, 'repos')
-        for i in data:
-            if i['language'] is None:
-                continue
-            if i['language'] not in languages:
-                languages[i['language']] = 1
-            else:
-                languages[i['language']] += 1
-    for language in sorted(languages, key=languages.get, reverse=True):
-        print(f'Самый популярный язык среди пользователей из списка - {language}.\n')
-        break
+        data = languages_per_user(user)
+        for lang, value in data.items():
+            if lang not in languages:
+                languages[lang] = 0
+            languages[lang] += len(value)
+    the_most_popular = key_with_highest_value(languages)
+    print(f'Самый популярный язык среди пользователей из списка - {the_most_popular}.\n')
+
+
+def key_with_highest_value(dic):
+    v = list(dic.values())
+    k = list(dic.keys())
+    return k[v.index(max(v))]
 
 
 def most_followers(user_list):
@@ -100,9 +93,8 @@ def most_followers(user_list):
     for user in user_list:
         data = get_data_from_user(user, 'user')
         followers_per_user[user] = data['followers']
-    for user in sorted(followers_per_user, key=followers_per_user.get, reverse=True):
-        print(f'Больше всего подписчиков у пользователя {user} - {followers_per_user[user]}.')
-        break
+    username = key_with_highest_value(followers_per_user)
+    print(f'Больше всего фолловеров у пользователя {username} - {followers_per_user[username]}.\n')
 
 
 def choice_of_action(list_of_users):
@@ -115,14 +107,14 @@ def choice_of_action(list_of_users):
     3.Узнать, у кого из пользователей в списке больше всего репозиториев.
     4.Узнать, какой язык самый популярный среди пользователей списка.
     5.Узнать, у кого из пользователей списка больше всего подписчиков.\n''')
-    action = input('Введите номер пункта:')
+    action = input('Введите номер пункта: ')
     actions = ['1', '2', '3', '4', '5']
     while action not in actions:
-        action = input('Введите номер пункта цифрой:')
+        action = input('Введите номер пункта цифрой: ')
     if action == '1':
         repos_names_description(choice_of_user(list_of_users))
     elif action == '2':
-        languages_per_user(choice_of_user(list_of_users))
+        print_languages_per_user(languages_per_user(choice_of_user(list_of_users)))
     elif action == '3':
         most_repos(list_of_users)
     elif action == '4':
