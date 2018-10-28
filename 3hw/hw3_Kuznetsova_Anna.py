@@ -44,7 +44,6 @@ def folder_maker(meta):
         os.makedirs(directory % 'mystem-plain')
 
 
-
 def append_to_csv(metadata):
     row = f'{metadata[0]}\t{metadata[1]}\t{metadata[2]}\t{metadata[3]}\tпублицистика\t\tнейтральный\tн-возраст\tн-уровень\tгородская\t{metadata[4]}\tКанские ведомости\t{metadata[5]}\tгазета\tРоссия\tКрасноярский край\tru\n'
     with open('newspaper\metadata.csv', 'a', encoding='utf-8') as f:
@@ -60,12 +59,7 @@ def plain_text(html, meta):
     with open('input.txt', 'w', encoding='utf-8') as f:
         f.write(text_plain)
     with open(meta[0], 'w', encoding='utf-8') as f:
-        f.write(f'''@au {meta[1]}
-@ti {title}
-@da {meta[3]}
-@topic None
-@url {meta[4]}
-{text_plain}''')
+        f.write(f'@au {meta[1]}\n@ti {title}\n@da {meta[3]}\n@topic None\n@url {meta[4]}\n{text_plain}')
 
 
 def mystem_xml(meta):
