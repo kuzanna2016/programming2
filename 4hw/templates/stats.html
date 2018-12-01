@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<!-- Everything before <html> tag is used to beautify the webpage. You can copy it to your website without changing it for the same effect. -->
+
+ <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Статистика</title>
+</head>
+
+<body>
+<div class="jumbotron">
+<center>
+<div class="btn-group">
+	<a href="/" class="btn btn-info">Отправить еще одну форму</a>
+	<a href="/search" class="btn btn-info">Поиск по данным</a>
+	<a href="/json" class="btn btn-info">Скачать в JSON</a>
+</div>
+</center>
+<h1 class="text-center">Статистика</h1>
+<h3 class="text-center">Информанты:</h3>
+<div class="container">
+<table class="table table-striped">
+	<thead>
+	<tr>
+		<th scope="col">Пол</th>
+		<th scope="col">Количество</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>Мужчины</td>
+		<td>{{ males }}</td>
+	</tr>
+	<tr>
+		<td>Женщины</td>
+		<td>{{ females }}</td>
+	</tr>
+	<tr>
+		<td>Всего</td>
+		<td>{{ informants }}</td>
+	</tr>
+	</tbody>
+</table>
+<center>
+<img src={{ url}} alt="Chart">
+</center>
+<h3 class="text-center">Все данные:</h3>
+<table class="table table-striped">
+	<thead>
+	<tr>
+		<th scope="col">Green</th>
+		<th scope="col">Grue</th>
+		<th scope="col">Blue</th>
+		<th scope="col">Email</th>
+		<th scope="col">Sex</th>
+	</tr>
+	</thead>
+	<tbody>
+{% for row in data %}
+	<tr>
+		{% for colum in row %}
+		<td>{{ colum }}</td>
+		{% endfor %}
+	</tr>
+    {% endfor %}
+	</tbody>
+</table>
+</div>
+</>
+</body>
+
+</html>

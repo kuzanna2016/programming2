@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<!-- Everything before <html> tag is used to beautify the webpage. You can copy it to your website without changing it for the same effect. -->
+
+ <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск</title>
+</head>
+
+<body>
+<center>
+<div class="jumbotron">
+<div class="btn-group">
+	<a href="/" class="btn btn-info">Отправить еще одну форму</a>
+	<a href="/stats" class="btn btn-info">Статистика</a>
+	<a href="/json" class="btn btn-info">Скачать в JSON</a>
+</div>
+	<form>
+		<label><br>Выберите цвет:<br>
+		<input type="radio" name="color" value="green"><div style="background-color: #00a61e;"><br><br></div>
+		<input type="radio" name="color" value="grue"><div style="background-color: #01a662;"><br><br></div>
+		<input type="radio" name="color" value="blue"><div style="background-color: #00a4b8;"><br><br></div>
+		</label><br>
+		<label>Найти название цвета: <input type="text" name="name"> </label><br>
+		<lable> Пол:
+		<label> <input type="radio" checked name="sex" value="male"> Мужской</label>
+		<label> <input type="radio" name="sex" value="female"> Женский</label>
+		<label> <input type="radio" name="sex" value="dontcare"> Неважно</label><br>
+		</lable>
+		<input type="submit" class="btn btn-primary" value="Поиск">
+	</form>
+</center>
+</div>
+</body>
+
+</html>
