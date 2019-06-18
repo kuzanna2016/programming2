@@ -1,1 +1,1 @@
-# rifmabot
+https://rhymemimebot.herokuapp.com/
